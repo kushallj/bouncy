@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ball Bouncing in Rectangle</title>
+   
+    <script src="https://cdn.tailwindcss.com"></script>
+  
+</head>
+<body class="bg-gray-100">
+    <canvas id="myCanvas" width="400" height="300"></canvas>
+
+    <script>
+        // Get the canvas element and its 2d context
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+
+        // Set the initial position and speed of the ball
+        var x = canvas.width / 2;
+        var y = canvas.height / 2;
+        var dx = 2; // Horizontal speed
+        var dy = -2; // Vertical speed
+        var ballRadius = 10;
+
+        // Function to draw the ball
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+            ctx.fillStyle = "#0095DD";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        // Function to update the ball's position and make it bounce
+        function updateBallPosition() {
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw the ball
+            drawBall();
+
+            // Check for collisions with the canvas boundaries
+            if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+                dx = -dx; // Reverse horizontal direction
+            }
+            if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+                dy = -dy; // Reverse vertical direction
+            }
+
+            // Update the ball's position
+            x += dx;
+            y += dy;
+        }
+
+        // Function to animate the ball
+        function animate() {
+            updateBallPosition();
+            requestAnimationFrame(animate);
+        }
+
+        // Start the animation
+        animate();
+    </script>
+</body>
+</html>
